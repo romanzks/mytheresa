@@ -4,6 +4,7 @@ namespace Tests\Feature;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Database\Seeders\BootsDiscountTestSeeder;
+use Database\Seeders\CategorySeeder;
 use Database\Seeders\SkuDiscountTestSeeder;
 use Database\Seeders\DiscountCollisionTestSeeder;
 use Tests\TestCase;
@@ -23,7 +24,7 @@ class Test extends TestCase
 
         $response
             ->assertStatus(200)
-            ->assertExactJson([[
+            ->assertExactJson(['products' => [[
                 'sku' => '000001',
                 'name' => 'BV Lean leather ankle boots',
                 'category' => 'boots',
@@ -73,7 +74,7 @@ class Test extends TestCase
                     'discount_percentage' => null,
                     'currency' => 'EUR',
                 ],
-            ]]);
+            ]]]);
     }
 
     /**
@@ -81,13 +82,14 @@ class Test extends TestCase
      */
     public function test_boots_discount()
     {
+        $this->seed(CategorySeeder::class);
         $this->seed(BootsDiscountTestSeeder::class);
 
         $response = $this->get('/products');
 
         $response
             ->assertStatus(200)
-            ->assertExactJson([[
+            ->assertExactJson(['products' => [[
                 'sku' => '000001',
                 'name' => 'BV Lean leather ankle boots',
                 'category' => 'boots',
@@ -97,7 +99,7 @@ class Test extends TestCase
                     'discount_percentage' => '30%',
                     'currency' => 'EUR',
                 ],
-            ]]);
+            ]]]);
     }
 
     /**
@@ -105,13 +107,14 @@ class Test extends TestCase
      */
     public function test_sku_discount()
     {
+        $this->seed(CategorySeeder::class);
         $this->seed(SkuDiscountTestSeeder::class);
 
         $response = $this->get('/products');
 
         $response
             ->assertStatus(200)
-            ->assertExactJson([[
+            ->assertExactJson(['products' => [[
                 'sku' => '000003',
                 'name' => 'Ashlington leather ankle boots',
                 'category' => 'sandals',
@@ -131,7 +134,7 @@ class Test extends TestCase
                     'discount_percentage' => null,
                     'currency' => 'EUR',
                 ],
-            ]]);
+            ]]]);
     }
 
     /**
@@ -139,13 +142,14 @@ class Test extends TestCase
      */
     public function test_discount_collision()
     {
+        $this->seed(CategorySeeder::class);
         $this->seed(DiscountCollisionTestSeeder::class);
 
         $response = $this->get('/products');
 
         $response
             ->assertStatus(200)
-            ->assertExactJson([[
+            ->assertExactJson(['products' => [[
                 'sku' => '000006',
                 'name' => 'Naima embellished suede sandals',
                 'category' => 'boots',
@@ -165,7 +169,7 @@ class Test extends TestCase
                     'discount_percentage' => '45%',
                     'currency' => 'EUR',
                 ],
-            ]]);
+            ]]]);
     }
 
     /**
@@ -174,13 +178,12 @@ class Test extends TestCase
     public function test_return_at_most_5_elements()
     {
         $this->seed();
-        // $this->seed(DiscountCollisionTestSeeder::class);
+        $this->seed(DiscountCollisionTestSeeder::class);
         
         $response = $this->get('/products');
 
-        $response
-            ->assertStatus(200)
-            ->assertJsonCount(5);
+        $response->assertStatus(200);
+        $this->assertEquals(5, count($response->getData()->products));
     }
 
     /**
@@ -194,7 +197,7 @@ class Test extends TestCase
 
         $response
             ->assertStatus(200)
-            ->assertExactJson([[
+            ->assertExactJson(['products' => [[
                 'sku' => '000004',
                 'name' => 'Naima embellished suede sandals',
                 'category' => 'sandals',
@@ -204,7 +207,7 @@ class Test extends TestCase
                     'discount_percentage' => null,
                     'currency' => 'EUR',
                 ],
-            ]]);
+            ]]]);
     }
 
     /**
@@ -220,7 +223,7 @@ class Test extends TestCase
 
         $response
             ->assertStatus(200)
-            ->assertExactJson([[
+            ->assertExactJson(['products' => [[
                 'sku' => '000003',
                 'name' => 'Ashlington leather ankle boots',
                 'category' => 'boots',
@@ -240,6 +243,6 @@ class Test extends TestCase
                     'discount_percentage' => null,
                     'currency' => 'EUR',
                 ],
-            ]]);
+            ]]]);
     }
 }

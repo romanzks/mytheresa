@@ -1,55 +1,52 @@
-## MYTHERESA Coding Challenge
+# Mytheresa Coding Challenge
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## How to run the project and tests?
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+**Docker is required to run the project**
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+Run project:
 
-## Learning Laravel
+    ./vendor/bin/sail up
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+Run migrations and data seeding:
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 2000 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+    ./vendor/bin/sail artisan migrate:fresh --seed
 
-## Laravel Sponsors
+Run tests:
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+    ./vendor/bin/sail artisan test
 
-### Premium Partners
+![](tests.png)
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[Lendio](https://lendio.com)**
+## Endpoint
 
-## Contributing
+`http://localhost/products`
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+## Explanations
 
-## Code of Conduct
+* The PHP framework **Laravel** was chosen for this project
+* **Postgres** database is used to store data
+* Category is a model and the discount is set at the database level
+* Discount for products with a certain SKU is also set at the database level
+* The approach in which all discounts are set at the database level allows us to be very flexible and set the necessary discounts without changing the code base
+* For each test case, we fill the test database with the necessary data set for this particular case
+* Below is a list of affected files
+    * Controllers:
+        * `app/Http/Controllers/ProductController.php`
+    * Resources:
+        * `app/Http/Resources/ProductResource.php`
+        * `app/Http/Resources/ProductsCollection.php`
+    * Models:
+        * `app/Models/Category.php`
+        * `app/Models/Product.php`
+    * Migrations:
+        * `database/migrations/*`
+    * Seeders:
+        * `database/seeders/*`
+    * Routes:
+        * `routes/web.php`
+    * Tests:
+        * `tests/Feature/Test.php`
+* The code contains comments related to the task conditions
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+## Thank you for viewing the project!

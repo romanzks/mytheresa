@@ -15,10 +15,11 @@ return new class extends Migration
     {
         Schema::create('products', function (Blueprint $table) {
             $table->id();
-            $table->string('sku');
+            $table->string('sku')->unique();
             $table->string('name');
-            $table->unsignedInteger('category_id')->references('id')->on('categories');
-            $table->unsignedInteger('price');
+            $table->unsignedInteger('category_id')
+                ->references('id')->on('categories')->index('category');
+            $table->unsignedInteger('price')->index('price');
             $table->unsignedDecimal('discount');
         });
     }

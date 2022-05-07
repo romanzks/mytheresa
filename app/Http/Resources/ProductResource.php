@@ -2,11 +2,17 @@
 
 namespace App\Http\Resources;
 
+use App\Models\Product;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class ProductResource extends JsonResource
 {
-    const DEFAULT_CURRENCY = 'EUR';
+    private function getDiscountPercentage($discountPercentage)
+    {
+        return $discountPercentage > 0
+            ? sprintf('%s%%', $discountPercentage * 100)
+            : null;
+    }
 
     public function toArray($request)
     {
@@ -25,10 +31,9 @@ class ProductResource extends JsonResource
             'price' => [
                 'original' => $this->price,
                 'final' => $this->price_final,
-                'discount_percentage' => $this->price_discount_percentage > 0
-                    ? sprintf('%s%%', $this->price_discount_percentage * 100)
-                    : null,
-                'currency' => self::DEFAULT_CURRENCY, // price.currency is always EUR
+                'discount_percentage' => 
+                    $this->getDiscountPercentage($this->price_discount_percentage),
+                'currency' => Product::DEFAULT_CURRENCY,
             ],
         ];
 

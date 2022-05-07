@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Category;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Seeder;
 
@@ -15,16 +16,13 @@ class CategorySeeder extends Seeder
     public function run()
     {
         DB::table('categories')->insert([[
-            'id' => 1,
-            'name' => 'boots',
+            'name' => Category::BOOTS,
             'discount' => 0.3, // Products in the boots category have a 30% discount.
         ], [
-            'id' => 2,
-            'name' => 'sandals',
+            'name' => Category::SANDALS,
             'discount' => 0,
         ], [
-            'id' => 3,
-            'name' => 'sneakers',
+            'name' => Category::SNEAKERS,
             'discount' => 0,
         ]]);
     }

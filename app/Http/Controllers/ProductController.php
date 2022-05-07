@@ -4,10 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Models\Product;
 use Illuminate\Http\Request;
-use App\Http\Resources\ProductResource;
+use App\Http\Resources\ProductsCollection;
 
 class ProductController extends Controller
 {
+    // Must return at most 5 elements
+    const LIMIT = 5;
+
     public function index(Request $request)
     {
         $products = Product::query();
@@ -26,7 +29,6 @@ class ProductController extends Controller
             $products->where('price', '<=', $request->priceLessThan);
         }
 
-        // Must return at most 5 elements
-        return ProductResource::collection($products->get())->take(5);
+        return new ProductsCollection($products->limit(self::LIMIT)->get());
     }
 }
