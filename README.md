@@ -24,12 +24,12 @@ Run tests:
 
 ## Explanations
 
-* The PHP framework **Laravel** was chosen for this project
-* **Postgres** database is used to store data
+* **Laravel** PHP framework is chosen for this project
+* **PostgreSQL** database is used to store data
 * Category is a model and the discount is set at the database level
 * Discount for products with a certain SKU is also set at the database level
 * The approach in which all discounts are set at the database level allows us to be very flexible and set the necessary discounts without changing the code base
-* For each test case, we fill the test database with the necessary data set for this particular case
+* For each test case, the test database is filled with the necessary data set for this particular case
 * Below is a list of affected files
     * Controllers:
         * `app/Http/Controllers/ProductController.php`
